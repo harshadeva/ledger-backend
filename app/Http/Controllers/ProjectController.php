@@ -10,15 +10,28 @@ use App\Http\Resources\Common\SuccessResponse;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $records = Project::paginate();
+            Log::info($request->all());
+            $query = Project::query();
+            if($request->has('name')){
+                $query->where('name', 'like', '%'.$request->name.'%');
+            }
+            if($request->has('start_date')){
+                $query->where('start_date', '>=', DatePicker::format($request->start_date));
+            }
+            if($request->has('due_date')){
+                $query->where('due_date', '<=', DatePicker::format($request->due_date));
+            }
+            $records = $query->paginate();
             $resource = ProjectResource::collection($records);
 
             return new SuccessResponse(['data' => $resource]);

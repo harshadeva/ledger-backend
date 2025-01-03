@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->respond(function (Response $response, Throwable $e) {
+            Log::error($e);
             $errorDetails = ErrorMessageTrait::getErrorStatusAndMessage($e, null, $status =  $statusCode = $response->getStatusCode());
             $message = $errorDetails['message'];
             $status = $errorDetails['status'];

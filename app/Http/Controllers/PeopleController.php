@@ -9,6 +9,7 @@ use App\Http\Resources\PeopleResource;
 use App\Models\People;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PeopleController extends Controller
 {
@@ -26,6 +27,7 @@ class PeopleController extends Controller
 
     public function store(PeopleStoreRequest $request)
     {
+        Log::info('store');
         DB::beginTransaction();
         try {
             $record = People::create([
