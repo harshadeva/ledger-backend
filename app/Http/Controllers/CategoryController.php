@@ -8,10 +8,27 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\Common\SuccessResponse;
 use App\Models\Category;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+    public function getAll(Request $request): SuccessResponse
+    {
+        try {
+            $query = Category::query();
+            if ($request['status'] != null) {
+                $query = $query->where('status', $request['status']);
+            }
+            $categories = $query->get();
+            $resource = CategoryResource::collection($categories);
+
+            return new SuccessResponse(['data' => $resource]);
+        } catch (Exception $e) {
+            ApiCatchErrors::throwException($e);
+        }
+    }
+
     public function index()
     {
         try {
@@ -20,7 +37,7 @@ class CategoryController extends Controller
 
             return new SuccessResponse(['data' => $resource]);
         } catch (Exception $e) {
-            ApiCatchErrors::throw($e);
+            ApiCatchErrors::throwException($e);
         }
     }
 
@@ -66,7 +83,7 @@ class CategoryController extends Controller
 
             return new SuccessResponse(['data' => $resource]);
         } catch (Exception $e) {
-            ApiCatchErrors::throw($e);
+            ApiCatchErrors::throwException($e);
         }
     }
 }

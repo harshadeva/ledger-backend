@@ -12,6 +12,18 @@ use Illuminate\Support\Facades\DB;
 
 class AccountsController extends Controller
 {
+    public function getAll()
+    {
+        try {
+            $records = Account::all();
+            $resource = AccountResource::collection($records);
+
+            return new SuccessResponse(['data' => $resource]);
+        } catch (Exception $e) {
+            ApiCatchErrors::throwException($e);
+        }
+    }
+
     public function index()
     {
         try {
@@ -20,7 +32,7 @@ class AccountsController extends Controller
 
             return new SuccessResponse(['data' => $resource]);
         } catch (Exception $e) {
-            ApiCatchErrors::throw($e);
+            ApiCatchErrors::throwException($e);
         }
     }
 
@@ -66,7 +78,7 @@ class AccountsController extends Controller
 
             return new SuccessResponse(['data' => $resource]);
         } catch (Exception $e) {
-            ApiCatchErrors::throw($e);
+            ApiCatchErrors::throwException($e);
         }
     }
 }

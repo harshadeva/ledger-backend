@@ -36,8 +36,8 @@ class AccountsTransaction extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function person()
+    public function stakeholder()
     {
-        return $this->belongsTo(People::class, 'person_id');
+        return $this->belongsTo(Stakeholder::class, 'stakeholder_id');
     }
 }

@@ -17,18 +17,40 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ProjectController extends Controller
 {
+    public function getAll(Request $request)
+    {
+        try {
+            $query = Project::query();
+            if ($request->has('name')) {
+                $query->where('name', 'like', '%'.$request->name.'%');
+            }
+            if ($request->has('start_date')) {
+                $query->where('start_date', '>=', DatePicker::format($request->start_date));
+            }
+            if ($request->has('due_date')) {
+                $query->where('due_date', '<=', DatePicker::format($request->due_date));
+            }
+            $records = $query->get();
+            $resource = ProjectResource::collection($records);
+
+            return new SuccessResponse(['data' => $resource]);
+        } catch (Exception $e) {
+            ApiCatchErrors::throwException($e);
+        }
+    }
+
     public function index(Request $request)
     {
         try {
             Log::info($request->all());
             $query = Project::query();
-            if($request->has('name')){
+            if ($request->has('name')) {
                 $query->where('name', 'like', '%'.$request->name.'%');
             }
-            if($request->has('start_date')){
+            if ($request->has('start_date')) {
                 $query->where('start_date', '>=', DatePicker::format($request->start_date));
             }
-            if($request->has('due_date')){
+            if ($request->has('due_date')) {
                 $query->where('due_date', '<=', DatePicker::format($request->due_date));
             }
             $records = $query->paginate();
@@ -97,10 +119,10 @@ class ProjectController extends Controller
     {
         try {
             $record = Project::find($id);
-            if($record == null){
+            if ($record == null) {
                 throw new HttpException(HttpStatus::UNPROCESSABLE_CONTENT, 'Record not found');
             }
-            if($record->transactions()->exists()){
+            if ($record->transactions()->exists()) {
                 throw new HttpException(HttpStatus::UNPROCESSABLE_CONTENT, 'Can not delete project');
             }
             $record->delete();

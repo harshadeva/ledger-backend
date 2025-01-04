@@ -33,15 +33,15 @@ class TransactionController extends Controller
             if ($request['account_id'] != null) {
                 $query = $query->where('account_id', $request['account_id']);
             }
-            if ($request['person_id'] != null) {
-                $query = $query->where('person_id', $request['person_id']);
+            if ($request['stakeholder_id'] != null) {
+                $query = $query->where('stakeholder_id', $request['stakeholder_id']);
             }
             $transactions = $query->paginate($request['page'] ?? 20);
             $resource = TransactionResource::collection($transactions);
 
             return new SuccessResponse(['data' => $resource]);
         } catch (Exception $e) {
-            ApiCatchErrors::throw($e);
+            ApiCatchErrors::throwException($e);
         }
     }
 
@@ -51,13 +51,13 @@ class TransactionController extends Controller
         try {
             $transaction = Transaction::create([
                 'account_id' => $request['account_id'],
-                'person_id' => $request['person_id'],
+                'stakeholder_id' => $request['stakeholder_id'],
                 'category_id' => $request['category_id'],
                 'project_id' => $request['project_id'],
                 'amount' => $request['amount'],
                 'date' => DatePicker::format($request['date']),
                 'type' => $request['type'],
-                'ref' => $request['ref'],
+                'ref' => $request['reference'],
                 'description' => $request['description'],
                 'status' => 1,
             ]);
@@ -76,13 +76,13 @@ class TransactionController extends Controller
         try {
             Transaction::find($id)->update([
                 'account_id' => $request['account_id'],
-                'person_id' => $request['person_id'],
+                'stakeholder_id' => $request['stakeholder_id'],
                 'category_id' => $request['category_id'],
                 'project_id' => $request['project_id'],
                 'amount' => $request['amount'],
                 'date' => DatePicker::format($request['date']),
                 'type' => $request['type'],
-                'ref' => $request['ref'],
+                'ref' => $request['reference'],
                 'description' => $request['description'],
             ]);
             $transaction = Transaction::find($id);
@@ -103,7 +103,7 @@ class TransactionController extends Controller
 
             return new SuccessResponse(['data' => $resource]);
         } catch (Exception $e) {
-            ApiCatchErrors::throw($e);
+            ApiCatchErrors::throwException($e);
         }
     }
 }

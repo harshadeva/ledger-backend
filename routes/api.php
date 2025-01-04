@@ -3,8 +3,8 @@
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StakeholderController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -20,10 +20,18 @@ Route::group(['prefix' => 'test'], function () {
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('test/auth', [TestController::class, 'authUser']);
 
+    Route::get('/categories/get-all', [CategoryController::class,'getAll'])->name('categories.get-all');
     Route::apiResource('/categories', CategoryController::class)->names('categories');
-    Route::apiResource('/people', PeopleController::class)->names('people');
+
+    Route::get('/stakeholders/get-all', [StakeholderController::class,'getAll'])->name('stakeholders.get-all');
+    Route::apiResource('/stakeholders', StakeholderController::class)->names('stakeholders');
+
+    Route::get('/projects/get-all', [ProjectController::class,'getAll'])->name('projects.get-all');
     Route::apiResource('/projects', ProjectController::class)->names('projects');
+
+    Route::get('/accounts/get-all', [AccountsController::class,'getAll'])->name('accounts.get-all');
     Route::apiResource('/accounts', AccountsController::class)->names('accounts');
+
     Route::apiResource('/transactions', TransactionController::class)->names('transactions');
 });
 

@@ -17,7 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('account_id');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('person_id');
+            $table->unsignedBigInteger('stakeholder_id');
             $table->unsignedBigInteger('project_id')->nullable();
             $table->enum('type', ['income', 'expense']);
             $table->date('date');
@@ -29,7 +29,7 @@ class CreateTransactionsTable extends Migration
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('no action');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('no action');
-            $table->foreign('person_id')->references('id')->on('people')->onDelete('no action');
+            $table->foreign('stakeholder_id')->references('id')->on('stakeholders')->onDelete('no action');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('no action');
         });
     }

@@ -31,16 +31,15 @@ class TransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:income,expense',
+            'type' => 'required|in:INCOME,EXPENSE',
             'date' => 'required|date',
             'description' => 'required|max:255',
             'account_id' => 'required|exists:accounts,id',
-            'person_id' => 'required|exists:people,id',
+            'stakeholder_id' => 'required|exists:stakeholders,id',
             'category_id' => 'required|exists:categories,id',
             'project_id' => 'nullable|exists:projects,id',
-            'ref' => 'nullable|max:255',
+            'reference' => 'required|max:255',
             'amount' => 'required|numeric|min:0|not_in:0',
-            'type' => 'required|in:income,expense',
         ];
     }
 }

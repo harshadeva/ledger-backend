@@ -31,8 +31,8 @@ class PeopleStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255|unique:people,name,'.$this->people,
-            'nick_name' => 'required|max:255|unique:people,nick_name,'.$this->people,
+            'name' => 'required|max:255|unique:stakeholders,name,'.$this->stakeholders,
+            'nick_name' => 'required|max:255|unique:stakeholders,nick_name,'.$this->stakeholders,
         ];
     }
 }

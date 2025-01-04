@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\HttpStatus;
 use App\ErrorMessageTrait;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

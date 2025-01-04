@@ -16,9 +16,9 @@ class Transaction extends Model
         return $this->belongsTo(Account::class, 'account_id');
     }
 
-    public function person()
+    public function stakeholder()
     {
-        return $this->belongsTo(People::class, 'person_id');
+        return $this->belongsTo(Stakeholder::class, 'stakeholder_id');
     }
 
     public function project()

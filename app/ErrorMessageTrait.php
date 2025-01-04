@@ -25,8 +25,7 @@ trait ErrorMessageTrait
         } elseif ($error instanceof ErrorException) {
             $status = HttpStatus::INTERNAL_SERVER_ERROR;
             // exceptions. Keep the default message for exception message, and also keep server error status
-        }
-        else{
+        } else {
             Log::error($error);
         }
         return ['message' => $message,'status' => $status];

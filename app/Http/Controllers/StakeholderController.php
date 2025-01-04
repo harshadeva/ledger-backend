@@ -6,22 +6,34 @@ use App\Classes\ApiCatchErrors;
 use App\Http\Requests\PeopleStoreRequest;
 use App\Http\Resources\Common\SuccessResponse;
 use App\Http\Resources\PeopleResource;
-use App\Models\People;
+use App\Models\Stakeholder;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class PeopleController extends Controller
+class StakeholderController extends Controller
 {
-    public function index()
+    public function getAll()
     {
         try {
-            $records = People::paginate();
+            $records = Stakeholder::all();
             $resource = PeopleResource::collection($records);
 
             return new SuccessResponse(['data' => $resource]);
         } catch (Exception $e) {
-            ApiCatchErrors::throw($e);
+            ApiCatchErrors::throwException($e);
+        }
+    }
+
+    public function index()
+    {
+        try {
+            $records = Stakeholder::paginate();
+            $resource = PeopleResource::collection($records);
+
+            return new SuccessResponse(['data' => $resource]);
+        } catch (Exception $e) {
+            ApiCatchErrors::throwException($e);
         }
     }
 
@@ -30,7 +42,7 @@ class PeopleController extends Controller
         Log::info('store');
         DB::beginTransaction();
         try {
-            $record = People::create([
+            $record = Stakeholder::create([
                 'name' => $request['name'],
                 'nick_name' => $request['nick_name'],
                 'status' => 1,
@@ -48,11 +60,11 @@ class PeopleController extends Controller
     {
         DB::beginTransaction();
         try {
-            People::find($id)->update([
+            Stakeholder::find($id)->update([
                 'name' => $request['name'],
                 'nick_name' => $request['nick_name'],
             ]);
-            $record = People::find($id);
+            $record = Stakeholder::find($id);
             DB::commit();
             $resource = new PeopleResource($record);
 
@@ -65,12 +77,12 @@ class PeopleController extends Controller
     public function show($id)
     {
         try {
-            $record = People::find($id);
+            $record = Stakeholder::find($id);
             $resource = new PeopleResource($record);
 
             return new SuccessResponse(['data' => $resource]);
         } catch (Exception $e) {
-            ApiCatchErrors::throw($e);
+            ApiCatchErrors::throwException($e);
         }
     }
 }
