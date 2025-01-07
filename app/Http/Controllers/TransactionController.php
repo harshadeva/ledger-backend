@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -22,10 +23,10 @@ class TransactionController extends Controller
                 $query = $query->whereBetween('date', [DatePicker::format($request['from_date']), DatePicker::format($request['to_date'])]);
             }
             if ($request['ref'] != null) {
-                $query = $query->where('ref', 'like', '%'.$request['ref'].'%');
+                $query = $query->where('ref', 'like', '%' . $request['ref'] . '%');
             }
             if ($request['description'] != null) {
-                $query = $query->where('ref', 'like', '%'.$request['description'].'%');
+                $query = $query->where('ref', 'like', '%' . $request['description'] . '%');
             }
             if ($request['type'] != null) {
                 $query = $query->where('type', $request['type']);
@@ -36,7 +37,7 @@ class TransactionController extends Controller
             if ($request['stakeholder_id'] != null) {
                 $query = $query->where('stakeholder_id', $request['stakeholder_id']);
             }
-            $transactions = $query->paginate($request['page'] ?? 20);
+            $transactions = $query->paginate();
             $resource = TransactionResource::collection($transactions);
 
             return new SuccessResponse(['data' => $resource]);
@@ -56,7 +57,7 @@ class TransactionController extends Controller
                 'project_id' => $request['project_id'],
                 'amount' => $request['amount'],
                 'date' => DatePicker::format($request['date']),
-                'type' => $request['type'],
+                'type' => strtoupper($request['type']),
                 'ref' => $request['reference'],
                 'description' => $request['description'],
                 'status' => 1,

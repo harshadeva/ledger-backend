@@ -20,7 +20,7 @@ class ProjectController extends Controller
     public function getAll(Request $request)
     {
         try {
-            $query = Project::query();
+            $query = Project::query()->with('transactions');
             if ($request->has('name')) {
                 $query->where('name', 'like', '%'.$request->name.'%');
             }

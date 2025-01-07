@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\TransactionTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProjectResource extends JsonResource
@@ -18,9 +19,10 @@ class ProjectResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'total' => $this->total,
-            'formatted_total' => number_format($this->total, 2),
             'start_date' => $this->start_date,
             'due_date' => $this->due_date,
+            'total_income'=>$this->transactions()->where('type', TransactionTypeEnum::INCOME)->sum('amount'),
+            'total_expense'=>$this->transactions()->where('type', TransactionTypeEnum::EXPENSE)->sum('amount'),
             'status' => $this->status,
         ];
     }

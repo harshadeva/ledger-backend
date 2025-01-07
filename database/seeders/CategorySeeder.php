@@ -21,7 +21,6 @@ class CategorySeeder extends Seeder
 
         DB::table('categories')->insert([
             [
-                'id' => 1,
                 'name' => "Transfer In",
                 'type' => TransactionTypeEnum::TRANSFER,
                 'status' => 0,
@@ -29,7 +28,6 @@ class CategorySeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'id' => 2,
                 'name' => "Transfer Out",
                 'type' => TransactionTypeEnum::TRANSFER,
                 'status' => 0,
@@ -37,7 +35,6 @@ class CategorySeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'id' => 3,
                 'name' => "Project Incomes",
                 'type' => TransactionTypeEnum::INCOME,
                 'status' => 1,
@@ -45,24 +42,42 @@ class CategorySeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'id' => 4,
-                'name' => "Worker Payments",
+                'name' => "Capital Deposit",
+                'type' => TransactionTypeEnum::INCOME,
+                'status' => 1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'name' => "Workers Payments",
                 'type' => TransactionTypeEnum::EXPENSE,
                 'status' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'id' => 5,
-                'name' => "Domain Payments",
+                'name' => "Capital Withdrawal",
                 'type' => TransactionTypeEnum::EXPENSE,
                 'status' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'id' => 6,
-                'name' => "Server Payments",
+                'name' => "Technical Services Payments",
+                'type' => TransactionTypeEnum::EXPENSE,
+                'status' => 1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'name' => "Management Payments",
+                'type' => TransactionTypeEnum::EXPENSE,
+                'status' => 1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'name' => "Sales & Marketing Cost",
                 'type' => TransactionTypeEnum::EXPENSE,
                 'status' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
