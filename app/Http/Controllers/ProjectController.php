@@ -6,6 +6,7 @@ use App\Classes\ApiCatchErrors;
 use App\Classes\DatePicker;
 use App\Enums\HttpStatus;
 use App\Http\Requests\ProjectStoreRequest;
+use App\Http\Resources\Common\PaginationResource;
 use App\Http\Resources\Common\SuccessResponse;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
@@ -56,7 +57,7 @@ class ProjectController extends Controller
             $records = $query->paginate();
             $resource = ProjectResource::collection($records);
 
-            return new SuccessResponse(['data' => $resource]);
+            return new SuccessResponse(['data' => $resource,'pagination'=> new PaginationResource($records)]);
         } catch (Exception $e) {
             ApiCatchErrors::throwException($e);
         }

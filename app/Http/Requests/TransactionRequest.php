@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Classes\ApiCatchErrors;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class TransactionRequest extends FormRequest
 {
@@ -30,6 +31,7 @@ class TransactionRequest extends FormRequest
      */
     public function rules()
     {
+        Log::info($this->all());
         return [
             'type' => 'required|in:INCOME,EXPENSE',
             'date' => 'required|date',

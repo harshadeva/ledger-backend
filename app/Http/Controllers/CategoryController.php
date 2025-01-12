@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\ApiCatchErrors;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\Common\PaginationResource;
 use App\Http\Resources\Common\SuccessResponse;
 use App\Models\Category;
 use Exception;
@@ -32,10 +33,10 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            $categories = Category::paginate();
-            $resource = CategoryResource::collection($categories);
+            $records = Category::paginate();
+            $resource = CategoryResource::collection($records);
 
-            return new SuccessResponse(['data' => $resource]);
+            return new SuccessResponse(['data' => $resource,'pagination'=> new PaginationResource($records)]);
         } catch (Exception $e) {
             ApiCatchErrors::throwException($e);
         }

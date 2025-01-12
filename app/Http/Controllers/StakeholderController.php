@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classes\ApiCatchErrors;
 use App\Http\Requests\PeopleStoreRequest;
+use App\Http\Resources\Common\PaginationResource;
 use App\Http\Resources\Common\SuccessResponse;
 use App\Http\Resources\PeopleResource;
 use App\Models\Stakeholder;
@@ -31,7 +32,7 @@ class StakeholderController extends Controller
             $records = Stakeholder::paginate();
             $resource = PeopleResource::collection($records);
 
-            return new SuccessResponse(['data' => $resource]);
+            return new SuccessResponse(['data' => $resource,'pagination'=> new PaginationResource($records)]);
         } catch (Exception $e) {
             ApiCatchErrors::throwException($e);
         }

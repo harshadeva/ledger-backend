@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\ApiCatchErrors;
 use App\Http\Requests\AccountStoreRequest;
 use App\Http\Resources\AccountResource;
+use App\Http\Resources\Common\PaginationResource;
 use App\Http\Resources\Common\SuccessResponse;
 use App\Models\Account;
 use Exception;
@@ -30,7 +31,7 @@ class AccountsController extends Controller
             $records = Account::paginate();
             $resource = AccountResource::collection($records);
 
-            return new SuccessResponse(['data' => $resource]);
+            return new SuccessResponse(['data' => $resource,'pagination'=> new PaginationResource($records)]);
         } catch (Exception $e) {
             ApiCatchErrors::throwException($e);
         }
