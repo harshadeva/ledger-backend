@@ -22,6 +22,7 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         try {
+            $pageSize = $request['pageSize'] ?? 20;
             $query = Transaction::query();
             if ($request['start_date'] != null) {
                 $query = $query->whereDate('date', '>=',DatePicker::format($request['start_date']));
@@ -44,7 +45,7 @@ class TransactionController extends Controller
             if ($request['stakeholder_id'] != null) {
                 $query = $query->where('stakeholder_id', $request['stakeholder_id']);
             }
-            $transactions = $query->latest()->paginate();
+            $transactions = $query->latest()->paginate($pageSize);
             $resource = TransactionResource::collection($transactions);
 
             return new SuccessResponse(['data' => $resource,'pagination'=> new PaginationResource($transactions)]);

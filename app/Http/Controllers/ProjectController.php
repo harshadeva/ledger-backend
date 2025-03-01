@@ -43,7 +43,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         try {
-            Log::info($request->all());
+            $pageSize = $request['pageSize'] ?? 20;
             $query = Project::query();
             if ($request->has('name')) {
                 $query->where('name', 'like', '%'.$request->name.'%');
@@ -54,7 +54,7 @@ class ProjectController extends Controller
             if ($request->has('due_date')) {
                 $query->where('due_date', '<=', DatePicker::format($request->due_date));
             }
-            $records = $query->paginate();
+            $records = $query->paginate($pageSize);
             $resource = ProjectResource::collection($records);
 
             return new SuccessResponse(['data' => $resource,'pagination'=> new PaginationResource($records)]);

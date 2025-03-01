@@ -9,6 +9,7 @@ use App\Http\Resources\Common\SuccessResponse;
 use App\Http\Resources\PeopleResource;
 use App\Models\Stakeholder;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -26,10 +27,11 @@ class StakeholderController extends Controller
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $records = Stakeholder::paginate();
+            $pageSize = $request['pageSize'] ?? 20;
+            $records = Stakeholder::paginate($pageSize);
             $resource = PeopleResource::collection($records);
 
             return new SuccessResponse(['data' => $resource,'pagination'=> new PaginationResource($records)]);
