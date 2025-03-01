@@ -22,7 +22,7 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         try {
-            $pageSize = $request['pageSize'] ?? 20;
+            $pageSize = $request['pageSize'] ?? 200;
             $query = Transaction::query();
             if ($request['start_date'] != null) {
                 $query = $query->whereDate('date', '>=',DatePicker::format($request['start_date']));

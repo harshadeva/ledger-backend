@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StakeholderController;
 use App\Http\Controllers\TestController;
@@ -33,6 +34,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::apiResource('/accounts', AccountsController::class)->names('accounts');
 
     Route::apiResource('/transactions', TransactionController::class)->names('transactions');
+
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 });
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
