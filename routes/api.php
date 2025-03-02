@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StakeholderController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransactionController;
@@ -36,6 +37,12 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::apiResource('/transactions', TransactionController::class)->names('transactions');
 
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+    Route::group(['prefix' => 'reports','name'=>'reports.'], function () {
+        Route::group(['prefix' => 'transactions','name'=>'transactions.'], function () {
+            Route::post('/download', [ReportController::class,'transactionsDownload'])->name('download');
+        });
+});
 });
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
