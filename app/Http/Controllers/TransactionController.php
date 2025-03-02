@@ -42,10 +42,13 @@ class TransactionController extends Controller
             if ($request['account_id'] != null) {
                 $query = $query->where('account_id', $request['account_id']);
             }
+            if ($request['project_id'] != null) {
+                $query = $query->where('project_id', $request['project_id']);
+            }
             if ($request['stakeholder_id'] != null) {
                 $query = $query->where('stakeholder_id', $request['stakeholder_id']);
             }
-            $transactions = $query->latest()->paginate($pageSize);
+            $transactions = $query->latest('date')->paginate($pageSize);
             $resource = TransactionResource::collection($transactions);
 
             return new SuccessResponse(['data' => $resource,'pagination'=> new PaginationResource($transactions)]);
