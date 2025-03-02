@@ -35,7 +35,7 @@ class TransactionExport implements FromCollection, WithColumnFormatting, WithHea
             $row['expense'] =  strtoupper($item->type) == TransactionTypeEnum::EXPENSE ? $item->amount : null;
             $row['project'] = $item->project->name  ?? '';
             $row['stakeholder'] = $item->stakeholder->name;
-            $row['description'] = $item->description;
+            $row['description'] = $item->out_description != null ? $item->out_description :  $item->description;
             return $row;
         });
     }
@@ -43,7 +43,8 @@ class TransactionExport implements FromCollection, WithColumnFormatting, WithHea
     public function columnFormats(): array
     {
         return [
-            'E' => '#,##0'
+            'F' => '#,##0',
+            'G' => '#,##0'
         ];
     }
 

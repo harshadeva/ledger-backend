@@ -13,7 +13,7 @@ class ReportController extends Controller
     public function transactionsDownload(Request $request){
         $totalIncomeQuery = Transaction::query();
         $totalIncomeQuery = $this->applyFilters($totalIncomeQuery,$request);
-        $transactions = $totalIncomeQuery->where('type', 'income')->get();
+        $transactions = $totalIncomeQuery->orderBy('date')->get();
 
         return Excel::download(new TransactionExport($transactions), 'transactions.xlsx');
     }
